@@ -21,4 +21,18 @@
     <dimen name="login_margin_top_create_account_button">16dp</dimen>
     <dimen name="login_min_height_create_account_button">16dp</dimen>
     <dimen name="login_padding_create_account_button">8dp</dimen>
+
+    <!-- Create Account -->
+    <dimen name="create_account_start_guideline">16dp</dimen>
+    <dimen name="create_account_end_guideline">16dp</dimen>
+    <dimen name="create_account_margin_top_title_text">100dp</dimen>
+    <dimen name="create_account_text_size_title_text">30sp</dimen>
+    <dimen name="create_account_margin_top_name_layout">30dp</dimen>
+    <dimen name="create_account_margin_top_email_layout">16dp</dimen>
+    <dimen name="create_account_margin_top_password_layout">16dp</dimen>
+    <dimen name="create_account_margin_top_confirm_password_layout">16dp</dimen>
+    <dimen name="create_account_margin_top_login_button">16dp</dimen>
+    <dimen name="create_account_margin_top_back_button">16dp</dimen>
+    <dimen name="create_account_layout_width_back_button">48dp</dimen>
+    <dimen name="create_account_layout_height_back_button">48dp</dimen>
 </resources>
