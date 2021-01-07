@@ -1,4 +1,4 @@
-package br.com.fornaro.mesanews.features.login
+package br.com.fornaro.mesanews.features.createaccount
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,22 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import br.com.fornaro.mesanews.R
-import br.com.fornaro.mesanews.databinding.FragmentLoginBinding
+import br.com.fornaro.mesanews.databinding.FragmentCreateAccountBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+class CreateAccountFragment : Fragment() {
 
-    private val viewModel: LoginViewModel by viewModel()
+    private val viewModel: CreateAccountViewModel by viewModel()
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentLoginBinding
+    ) = FragmentCreateAccountBinding
         .inflate(inflater)
         .apply {
             _binding = this
@@ -30,7 +29,11 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupCreateAccountButton()
+        setupBackButton()
+    }
+
+    private fun setupBackButton() = with(binding.backButton) {
+        setOnClickListener { findNavController().navigateUp() }
     }
 
     override fun onDestroyView() {
@@ -38,7 +41,4 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupCreateAccountButton() = with(binding.createAccountButton) {
-        setOnClickListener { findNavController().navigate(R.id.createAccountFragment) }
-    }
 }
