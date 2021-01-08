@@ -17,7 +17,7 @@ android {
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-    buildConfigField("String", "BASE_URL", "\"https://mesa-news-api.herokuapp.com/\"")
+    buildConfigField("String", "BASE_URL", "\"https://mesa-news-api.herokuapp.com/v1/\"")
   }
 
   buildFeatures {
