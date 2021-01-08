@@ -1,4 +1,4 @@
-package br.com.fornaro.mesanews.domain.handlers
+package br.com.fornaro.mesanews.domain.exceptions
 
 import br.com.fornaro.mesanews.data.source.remote.api.NoConnectivityException
 import br.com.fornaro.mesanews.domain.enums.ErrorType
@@ -14,6 +14,10 @@ class ExceptionMapper(
 
     private val exceptions = listOf(
         Pair(NoConnectivityException::class, ErrorType.NO_INTERNET),
+        Pair(InvalidNameException::class, ErrorType.INVALID_NAME),
+        Pair(InvalidEmailException::class, ErrorType.INVALID_EMAIL),
+        Pair(InvalidPasswordException::class, ErrorType.INVALID_PASSWORD),
+        Pair(InvalidConfirmPasswordException::class, ErrorType.INVALID_CONFIRM_PASSWORD),
     )
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {

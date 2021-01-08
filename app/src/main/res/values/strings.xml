@@ -4,6 +4,10 @@
     <!-- Error -->
     <string name="error_no_internet">No internet connection</string>
     <string name="error_generic_error">Something went wrong. Try again</string>
+    <string name="error_invalid_name">Invalid name</string>
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_invalid_password">Invalid password</string>
+    <string name="error_invalid_confirm_password">Invalid confirm password</string>
 
     <!-- Login -->
     <string name="login_title">Sign In to Mesa News</string>

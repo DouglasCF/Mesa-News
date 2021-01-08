@@ -48,6 +48,7 @@ class CreateAccountFragment : Fragment() {
                 name = binding.nameText.text.toString(),
                 email = binding.emailText.text.toString(),
                 password = binding.passwordText.text.toString(),
+                confirmPassword = binding.confirmPasswordText.text.toString()
             )
         }
     }
@@ -69,7 +70,11 @@ class CreateAccountFragment : Fragment() {
 
     private fun handleError(errorType: ErrorType) = when (errorType) {
         ErrorType.NO_INTERNET -> toast(R.string.error_no_internet)
-        ErrorType.GENERIC_ERROR -> toast(R.string.error_generic_error)
+        ErrorType.INVALID_NAME -> toast(R.string.error_invalid_name)
+        ErrorType.INVALID_EMAIL -> toast(R.string.error_invalid_email)
+        ErrorType.INVALID_PASSWORD -> toast(R.string.error_invalid_password)
+        ErrorType.INVALID_CONFIRM_PASSWORD -> toast(R.string.error_invalid_confirm_password)
+        else -> toast(R.string.error_generic_error)
     }
 
     private fun handleSuccess() {
