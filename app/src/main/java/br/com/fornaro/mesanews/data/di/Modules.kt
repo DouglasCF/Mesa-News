@@ -2,6 +2,8 @@ package br.com.fornaro.mesanews.data.di
 
 import android.content.Context
 import br.com.fornaro.mesanews.BuildConfig
+import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
+import br.com.fornaro.mesanews.data.dispatchers.MainDispatcherMap
 import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
@@ -33,7 +35,17 @@ private val localDataSourceModules = module {
 }
 
 private val repositoryModules = module {
-    single { AuthenticationRepository(remoteDataSource = get(), localDataSource = get()) }
+    single {
+        AuthenticationRepository(
+            remoteDataSource = get(),
+            localDataSource = get(),
+            dispatcherMap = get()
+        )
+    }
+}
+
+private val dispatcherModules = module {
+    single<DispatcherMap> { MainDispatcherMap }
 }
 
 private val mapperModules = module {
@@ -62,4 +74,5 @@ val dataModules = networkModules +
         remoteDataSourceModules +
         localDataSourceModules +
         repositoryModules +
-        mapperModules
+        mapperModules +
+        dispatcherModules
