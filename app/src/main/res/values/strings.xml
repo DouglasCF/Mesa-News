@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Mesa News</string>
 
+    <!-- Error -->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_generic_error">Something went wrong. Try again</string>
+
     <!-- Login -->
     <string name="login_title">Sign In to Mesa News</string>
     <string name="login_description">Stay tuned to the news around the world!</string>

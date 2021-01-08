@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Mesa News</string>
 
+    <!-- Error -->
+    <string name="error_no_internet">Sem conexão com a internet</string>
+    <string name="error_generic_error">Alguma coisa estranha aconteceu. Tente novamente</string>
+
     <!-- Login -->
     <string name="login_title">Entrar no Mesa News</string>
     <string name="login_description">Fique antenado nas noticias que rodam o mundo!</string>
