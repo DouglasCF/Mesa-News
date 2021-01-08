@@ -1,13 +1,14 @@
 package br.com.fornaro.mesanews.data.repository
 
+import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AuthenticationRepository(
     private val remoteDataSource: AuthenticationRemoteDataSource,
-    private val localDataSource: AuthenticationLocalDataSource
+    private val localDataSource: AuthenticationLocalDataSource,
+    private val dispatcherMap: DispatcherMap
 ) {
 
     val token get() = localDataSource.token
@@ -15,7 +16,7 @@ class AuthenticationRepository(
     val isUserLogged get() = !token.isNullOrBlank()
 
     suspend fun signUp(name: String, email: String, password: String) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcherMap.io) {
             remoteDataSource.signUp(name = name, email = email, password = password)
                 .also { saveToken(it.token) }
         }
