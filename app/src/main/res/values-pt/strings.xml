@@ -4,6 +4,10 @@
     <!-- Error -->
     <string name="error_no_internet">Sem conexão com a internet</string>
     <string name="error_generic_error">Alguma coisa estranha aconteceu. Tente novamente</string>
+    <string name="error_invalid_name">Nome inválido</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_invalid_password">Senha inválida</string>
+    <string name="error_invalid_confirm_password">Confirmar senha inválida</string>
 
     <!-- Login -->
     <string name="login_title">Entrar no Mesa News</string>

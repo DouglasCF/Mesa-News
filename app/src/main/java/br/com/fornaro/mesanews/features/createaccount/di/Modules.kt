@@ -7,7 +7,11 @@ import org.koin.dsl.module
 private val viewModelModules = module {
     viewModel {
         CreateAccountViewModel(
-            createAccountUseCase = get()
+            createAccountUseCase = get(),
+            validConfirmPasswordUseCase = get(),
+            validEmailUseCase = get(),
+            validNameUseCase = get(),
+            validPasswordUseCase = get()
         )
     }
 }
