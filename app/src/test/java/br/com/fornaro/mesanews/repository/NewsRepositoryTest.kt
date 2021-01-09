@@ -42,7 +42,7 @@ class NewsRepositoryTest {
     }
 
     @Test(expected = InvalidTokenException::class)
-    fun `should throw exception when token is null`() = runBlockingTest {
+    fun `should throw exception when token is null while getting highlights`() = runBlockingTest {
         every { authenticationRepository.token } returns null
 
         repository.getHighlightsNews()
@@ -60,5 +60,26 @@ class NewsRepositoryTest {
 
         assertEquals(highlightsNews, result)
         coVerify { newsRemoteDataSource.fetchHighlights(token) }
+    }
+
+    @Test(expected = InvalidTokenException::class)
+    fun `should throw exception when token is null while getting news`() = runBlockingTest {
+        every { authenticationRepository.token } returns null
+
+        repository.getNews()
+    }
+
+    @Test
+    fun `should load news successfully`() = runBlockingTest {
+        val token = "token"
+        val news = mockk<List<News>>()
+
+        every { authenticationRepository.token } returns token
+        coEvery { newsRemoteDataSource.fetchNews(token) } returns news
+
+        val result = repository.getNews()
+
+        assertEquals(news, result)
+        coVerify { newsRemoteDataSource.fetchNews(token) }
     }
 }

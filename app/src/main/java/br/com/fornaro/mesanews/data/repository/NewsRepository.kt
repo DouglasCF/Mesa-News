@@ -15,4 +15,9 @@ class NewsRepository(
         authenticationRepository.token?.let { newsRemoteDataSource.fetchHighlights(it) }
             ?: throw InvalidTokenException()
     }
+
+    suspend fun getNews() = withContext(dispatcherMap.io) {
+        authenticationRepository.token?.let { newsRemoteDataSource.fetchNews(it) }
+            ?: throw InvalidTokenException()
+    }
 }
