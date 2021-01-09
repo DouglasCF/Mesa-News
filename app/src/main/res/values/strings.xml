@@ -29,4 +29,7 @@
     <string name="create_account_login_button_description">Create an account</string>
     <string name="create_account_back_button_description">Back</string>
 
+    <!-- Feed -->
+    <string name="feed_highlights_title">Highlights</string>
+
 </resources>
