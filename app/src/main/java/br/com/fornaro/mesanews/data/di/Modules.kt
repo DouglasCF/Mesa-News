@@ -9,8 +9,10 @@ import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.api.ConnectivityInterceptor
 import br.com.fornaro.mesanews.data.source.remote.api.MesaApi
-import br.com.fornaro.mesanews.data.source.remote.mappers.AuthenticationRemoteMapper
-import br.com.fornaro.mesanews.data.source.remote.mappers.AuthenticationRemoteMapperAlias
+import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapper
+import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapperAlias
+import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapper
+import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapperAlias
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -27,7 +29,13 @@ private val networkModules = module {
 }
 
 private val remoteDataSourceModules = module {
-    single { AuthenticationRemoteDataSource(api = get(), mapper = get()) }
+    single {
+        AuthenticationRemoteDataSource(
+            api = get(),
+            signUpMapper = get(),
+            signInMapper = get()
+        )
+    }
 }
 
 private val localDataSourceModules = module {
@@ -49,7 +57,8 @@ private val dispatcherModules = module {
 }
 
 private val mapperModules = module {
-    single<AuthenticationRemoteMapperAlias> { AuthenticationRemoteMapper }
+    single<SignUpRemoteMapperAlias> { SignUpRemoteMapper }
+    single<SignInRemoteMapperAlias> { SignInRemoteMapper }
 }
 
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
