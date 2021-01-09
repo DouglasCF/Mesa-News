@@ -18,6 +18,7 @@ class ExceptionMapper(
         Pair(InvalidEmailException::class, ErrorType.INVALID_EMAIL),
         Pair(InvalidPasswordException::class, ErrorType.INVALID_PASSWORD),
         Pair(InvalidConfirmPasswordException::class, ErrorType.INVALID_CONFIRM_PASSWORD),
+        Pair(InvalidTokenException::class, ErrorType.INVALID_TOKEN)
     )
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {

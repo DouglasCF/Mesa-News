@@ -58,7 +58,7 @@ class CreateAccountViewModelTest : BaseCoroutinesTest() {
     }
 
     @Test
-    fun `should not sign up when a error happens`() {
+    fun `should not sign up when an error happens`() {
         coEvery {
             createAccountUseCase.execute(
                 anyString(),

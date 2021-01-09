@@ -59,7 +59,7 @@ class LoginViewModelTest : BaseCoroutinesTest() {
     }
 
     @Test
-    fun `should not sign in when a error happens`() {
+    fun `should not sign in when an error happens`() {
         coEvery { signInUseCase.execute(anyString(), anyString()) } throws Exception()
 
         viewModel.signIn(anyString(), anyString())
