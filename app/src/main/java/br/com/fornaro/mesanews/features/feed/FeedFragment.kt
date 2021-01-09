@@ -16,6 +16,10 @@ class FeedFragment : Fragment() {
 
     private val viewModel: FeedViewModel by viewModel()
 
+    private val highlightsAdapter: HighlightsAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        HighlightsAdapter()
+    }
+
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
@@ -32,7 +36,12 @@ class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupHighlightsRecyclerView()
         setupViewModel()
+    }
+
+    private fun setupHighlightsRecyclerView() = with(binding.highlightsRecycler) {
+        adapter = highlightsAdapter
     }
 
     private fun setupViewModel() = with(viewModel) {
@@ -49,7 +58,10 @@ class FeedFragment : Fragment() {
         }
     }
 
-    private fun handleLoading(loading: Boolean) = with(binding.loading) { isVisible = loading }
+    private fun handleLoading(loading: Boolean) {
+        binding.container.isVisible = !loading
+        binding.loading.isVisible = loading
+    }
 
     private fun handleError(errorType: ErrorType) = when (errorType) {
         ErrorType.NO_INTERNET -> toast(R.string.error_no_internet)
@@ -61,12 +73,11 @@ class FeedFragment : Fragment() {
     }
 
     private fun handleSuccess(data: FeedState.Success) {
-        data
+        highlightsAdapter.data = data.highlights
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

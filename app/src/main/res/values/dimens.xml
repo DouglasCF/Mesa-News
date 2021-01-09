@@ -35,4 +35,20 @@
     <dimen name="create_account_margin_top_back_button">16dp</dimen>
     <dimen name="create_account_layout_width_back_button">48dp</dimen>
     <dimen name="create_account_layout_height_back_button">48dp</dimen>
+
+    <!-- Feed -->
+    <dimen name="feed_margin_top_highlights_recycler">16dp</dimen>
+    <dimen name="feed_padding_start_highlights_recycler">16dp</dimen>
+    <dimen name="feed_padding_end_highlights_recycler">16dp</dimen>
+    <dimen name="feed_margin_top_highlights_text">16dp</dimen>
+    <dimen name="feed_margin_start_highlights_text">16dp</dimen>
+    <dimen name="feed_text_size_highlights_text">30sp</dimen>
+
+    <!-- Item Highlights -->
+    <dimen name="item_highlights_layout_height_card_view">260dp</dimen>
+    <dimen name="item_highlights_radius_card_view">8dp</dimen>
+    <dimen name="item_highlights_margin_bottom_description">16dp</dimen>
+    <dimen name="item_highlights_margin_bottom_title">16dp</dimen>
+    <dimen name="item_highlights_text_size_title">20sp</dimen>
+    <dimen name="item_highlights_min_size_favorite_button">48dp</dimen>
 </resources>

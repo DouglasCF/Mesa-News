@@ -11,4 +11,6 @@ data class News(
     val isHighlight: Boolean,
     val url: String,
     val imageUrl: String
-)
+) {
+    var isFavorite = false
+}

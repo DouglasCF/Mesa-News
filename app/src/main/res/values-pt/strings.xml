@@ -28,4 +28,7 @@
     <string name="create_account_confirm_password_text">Confirmar senha</string>
     <string name="create_account_login_button_description">Criar uma conta</string>
     <string name="create_account_back_button_description">Voltar</string>
+
+    <!-- Feed -->
+    <string name="feed_highlights_title">Destaques</string>
 </resources>

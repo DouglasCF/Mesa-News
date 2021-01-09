@@ -9,4 +9,5 @@
   <color name="white">#FFFFFFFF</color>
   <color name="facebook">#3b5998</color>
   <color name="divider">#bababa</color>
+  <color name="front_image">#77000000</color>
 </resources>
