@@ -10,9 +10,7 @@ import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.api.ConnectivityInterceptor
 import br.com.fornaro.mesanews.data.source.remote.api.MesaApi
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapper
-import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapperAlias
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapper
-import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapperAlias
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -57,8 +55,8 @@ private val dispatcherModules = module {
 }
 
 private val mapperModules = module {
-    single<SignUpRemoteMapperAlias> { SignUpRemoteMapper }
-    single<SignInRemoteMapperAlias> { SignInRemoteMapper }
+    single { SignUpRemoteMapper }
+    single { SignInRemoteMapper }
 }
 
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
