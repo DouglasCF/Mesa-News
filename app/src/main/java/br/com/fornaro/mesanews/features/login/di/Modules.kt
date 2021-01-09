@@ -7,6 +7,7 @@ import org.koin.dsl.module
 private val viewModelModules = module {
     viewModel {
         LoginViewModel(
+            authenticationRepository = get(),
             signInUseCase = get(),
             validEmailUseCase = get(),
             validPasswordUseCase = get()

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentCreateAccountBinding
 import br.com.fornaro.mesanews.domain.enums.ErrorType
@@ -78,7 +79,7 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun handleSuccess() {
-
+        findNavController().navigate(R.id.feedFragment)
     }
 
     override fun onDestroyView() {
