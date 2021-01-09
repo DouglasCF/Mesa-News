@@ -12,6 +12,7 @@ import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.api.ConnectivityInterceptor
 import br.com.fornaro.mesanews.data.source.remote.api.MesaApi
 import br.com.fornaro.mesanews.data.source.remote.mappers.HighlightsRemoteMapper
+import br.com.fornaro.mesanews.data.source.remote.mappers.NewsRemoteMapper
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapper
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapper
 import com.squareup.moshi.Moshi
@@ -41,7 +42,8 @@ private val remoteDataSourceModules = module {
     single {
         NewsRemoteDataSource(
             api = get(),
-            highlightsMapper = get()
+            highlightsMapper = get(),
+            newsMapper = get()
         )
     }
 }
@@ -76,6 +78,7 @@ private val mapperModules = module {
     single { SignUpRemoteMapper }
     single { SignInRemoteMapper }
     single { HighlightsRemoteMapper }
+    single { NewsRemoteMapper }
 }
 
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()

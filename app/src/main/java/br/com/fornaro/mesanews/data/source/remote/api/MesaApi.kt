@@ -3,6 +3,7 @@ package br.com.fornaro.mesanews.data.source.remote.api
 import br.com.fornaro.mesanews.data.source.remote.request.SignInRequestBody
 import br.com.fornaro.mesanews.data.source.remote.request.SignUpRequestBody
 import br.com.fornaro.mesanews.data.source.remote.response.HighlightsResponse
+import br.com.fornaro.mesanews.data.source.remote.response.NewsResponse
 import br.com.fornaro.mesanews.data.source.remote.response.SignInResponse
 import br.com.fornaro.mesanews.data.source.remote.response.SignUpResponse
 import retrofit2.http.Body
@@ -22,4 +23,7 @@ interface MesaApi {
 
     @GET("client/news/highlights")
     suspend fun fetchHighlights(@Header(AUTHORIZATION) userToken: String): HighlightsResponse
+
+    @GET("client/news")
+    suspend fun fetchNews(@Header(AUTHORIZATION) userToken: String): NewsResponse
 }
