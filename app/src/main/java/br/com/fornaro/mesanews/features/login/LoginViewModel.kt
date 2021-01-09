@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.domain.enums.ErrorType
 import br.com.fornaro.mesanews.domain.exceptions.ExceptionMapper
 import br.com.fornaro.mesanews.domain.usecase.SignInUseCase
@@ -12,6 +13,7 @@ import br.com.fornaro.mesanews.domain.usecase.ValidPasswordUseCase
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
+    private val authenticationRepository: AuthenticationRepository,
     private val signInUseCase: SignInUseCase,
     private val validEmailUseCase: ValidEmailUseCase,
     private val validPasswordUseCase: ValidPasswordUseCase
@@ -19,6 +21,12 @@ class LoginViewModel(
 
     private val _state = MutableLiveData<SignInState>()
     val state: LiveData<SignInState> get() = _state
+
+    fun checkUserIsLoggedIn() {
+        if (authenticationRepository.isUserLogged) {
+            _state.value = SignInState.UserAlreadyLogged
+        }
+    }
 
     fun signIn(email: String, password: String) {
         val handler = ExceptionMapper { error ->
@@ -38,5 +46,6 @@ class LoginViewModel(
 sealed class SignInState {
     object Success : SignInState()
     object Loading : SignInState()
+    object UserAlreadyLogged : SignInState()
     data class Error(val error: ErrorType) : SignInState()
 }

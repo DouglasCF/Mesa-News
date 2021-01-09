@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentLoginBinding
 import br.com.fornaro.mesanews.domain.enums.ErrorType
@@ -49,6 +50,7 @@ class LoginFragment : Fragment() {
 
     private fun setupViewModel() = with(viewModel) {
         state.observe(viewLifecycleOwner, ::handleState)
+        checkUserIsLoggedIn()
     }
 
     private fun handleState(state: SignInState) {
@@ -56,7 +58,8 @@ class LoginFragment : Fragment() {
         when (state) {
             is SignInState.Loading -> handleLoading(true)
             is SignInState.Error -> handleError(state.error)
-            is SignInState.Success -> handleSuccess()
+            is SignInState.Success,
+            is SignInState.UserAlreadyLogged -> handleSuccess()
         }
     }
 
@@ -70,7 +73,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun handleSuccess() {
-
+        findNavController().navigate(R.id.feedFragment)
     }
 
     override fun onDestroyView() {
