@@ -21,6 +21,12 @@ class AuthenticationRepository(
                 .also { saveToken(it.token) }
         }
 
+    suspend fun signIn(email: String, password: String) =
+        withContext(dispatcherMap.io) {
+            remoteDataSource.signIn(email = email, password = password)
+                .also { saveToken(it.token) }
+        }
+
     private fun saveToken(token: String) {
         localDataSource.token = token
     }

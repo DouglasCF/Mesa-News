@@ -91,4 +91,21 @@ class AuthenticationRepositoryTest {
 
         verify { localDataSource.token = token }
     }
+
+    @Test
+    fun `sign in should save token when successfully`() = runBlockingTest {
+        val token = "token"
+        val authentication = Authentication(token = token)
+
+        coEvery {
+            remoteDataSource.signIn(
+                anyString(),
+                anyString()
+            )
+        } returns authentication
+
+        repository.signIn(anyString(), anyString())
+
+        verify { localDataSource.token = token }
+    }
 }

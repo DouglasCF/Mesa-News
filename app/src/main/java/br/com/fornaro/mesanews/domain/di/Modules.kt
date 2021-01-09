@@ -9,6 +9,7 @@ private val useCaseModules = module {
     single { ValidPasswordUseCase() }
     single { ValidEmailUseCase() }
     single { ValidNameUseCase() }
+    single { SignInUseCase(authenticationRepository = get()) }
 }
 
 val domainModules = useCaseModules

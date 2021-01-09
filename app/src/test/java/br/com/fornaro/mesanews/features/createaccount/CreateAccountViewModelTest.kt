@@ -51,14 +51,14 @@ class CreateAccountViewModelTest : BaseCoroutinesTest() {
     }
 
     @Test
-    fun `should sign in successfully`() {
+    fun `should sign up successfully`() {
         viewModel.signUp(anyString(), anyString(), anyString(), anyString())
 
         assertEquals(CreateAccountState.Success, viewModel.state.value)
     }
 
     @Test
-    fun `should not sign in when a error happens`() {
+    fun `should not sign up when a error happens`() {
         coEvery {
             createAccountUseCase.execute(
                 anyString(),
