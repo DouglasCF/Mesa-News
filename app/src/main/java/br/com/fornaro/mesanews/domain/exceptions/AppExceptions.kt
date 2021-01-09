@@ -7,3 +7,7 @@ class InvalidEmailException : Exception("Email is invalid")
 class InvalidPasswordException : Exception("Password is invalid")
 
 class InvalidConfirmPasswordException : Exception("Confirm password is invalid")
+
+class InvalidDateFormatException : Exception("Date format is invalid")
+
+class InvalidTokenException : Exception("Token is invalid")

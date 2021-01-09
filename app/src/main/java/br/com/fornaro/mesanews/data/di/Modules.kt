@@ -5,10 +5,13 @@ import br.com.fornaro.mesanews.BuildConfig
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.dispatchers.MainDispatcherMap
 import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
+import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
+import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.api.ConnectivityInterceptor
 import br.com.fornaro.mesanews.data.source.remote.api.MesaApi
+import br.com.fornaro.mesanews.data.source.remote.mappers.HighlightsRemoteMapper
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignInRemoteMapper
 import br.com.fornaro.mesanews.data.source.remote.mappers.SignUpRemoteMapper
 import com.squareup.moshi.Moshi
@@ -34,6 +37,13 @@ private val remoteDataSourceModules = module {
             signInMapper = get()
         )
     }
+
+    single {
+        NewsRemoteDataSource(
+            api = get(),
+            highlightsMapper = get()
+        )
+    }
 }
 
 private val localDataSourceModules = module {
@@ -48,6 +58,14 @@ private val repositoryModules = module {
             dispatcherMap = get()
         )
     }
+
+    single {
+        NewsRepository(
+            authenticationRepository = get(),
+            newsRemoteDataSource = get(),
+            dispatcherMap = get()
+        )
+    }
 }
 
 private val dispatcherModules = module {
@@ -57,6 +75,7 @@ private val dispatcherModules = module {
 private val mapperModules = module {
     single { SignUpRemoteMapper }
     single { SignInRemoteMapper }
+    single { HighlightsRemoteMapper }
 }
 
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
