@@ -19,6 +19,7 @@
     <string name="login_or_text">Ou</string>
     <string name="login_login_button_description">Entrar</string>
     <string name="login_facebook_login_button_description">Entrar com facebook</string>
+    <string name="error_try_again_button">Tentar novamente</string>
 
     <!-- Create Account -->
     <string name="create_account_title">Crie uma conta</string>

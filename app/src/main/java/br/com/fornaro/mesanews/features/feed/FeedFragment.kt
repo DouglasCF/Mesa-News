@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentFeedBinding
-import br.com.fornaro.mesanews.domain.enums.ErrorType
-import br.com.fornaro.mesanews.extensions.toast
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FeedFragment : Fragment() {
@@ -44,6 +41,7 @@ class FeedFragment : Fragment() {
         setupHighlightsRecyclerView()
         setupNewsRecyclerView()
         setupViewModel()
+        setupError()
     }
 
     private fun setupHighlightsRecyclerView() = with(binding.highlightsRecycler) {
@@ -60,11 +58,16 @@ class FeedFragment : Fragment() {
         getNews()
     }
 
+    private fun setupError() = with(binding.error.tryAgainButton) {
+        setOnClickListener { viewModel.getNews() }
+    }
+
     private fun handleState(state: FeedState) {
         handleLoading(false)
+        handleError(false)
         when (state) {
             is FeedState.Loading -> handleLoading(true)
-            is FeedState.Error -> handleError(state.error)
+            is FeedState.Error -> handleError(true)
             is FeedState.Success -> handleSuccess(state)
         }
     }
@@ -74,13 +77,9 @@ class FeedFragment : Fragment() {
         binding.loading.isVisible = loading
     }
 
-    private fun handleError(errorType: ErrorType) = when (errorType) {
-        ErrorType.NO_INTERNET -> toast(R.string.error_no_internet)
-        ErrorType.INVALID_NAME -> toast(R.string.error_invalid_name)
-        ErrorType.INVALID_EMAIL -> toast(R.string.error_invalid_email)
-        ErrorType.INVALID_PASSWORD -> toast(R.string.error_invalid_password)
-        ErrorType.INVALID_CONFIRM_PASSWORD -> toast(R.string.error_invalid_confirm_password)
-        else -> toast(R.string.error_generic_error)
+    private fun handleError(error: Boolean) {
+        binding.container.isVisible = !error
+        binding.error.root.isVisible = error
     }
 
     private fun handleSuccess(data: FeedState.Success) {
