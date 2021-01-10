@@ -9,7 +9,7 @@ import br.com.fornaro.mesanews.data.source.local.database.entities.UserEntity
 @Dao
 interface UserDao {
 
-    @Query("SELECT token FROM UserEntity WHERE email = :email")
+    @Query("SELECT token FROM users WHERE email = :email")
     suspend fun selectToken(email: String): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

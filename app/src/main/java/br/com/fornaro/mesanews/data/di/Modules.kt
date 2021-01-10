@@ -86,12 +86,14 @@ private val mapperModules = module {
 private val databaseModules = module {
     single { provideDatabase(androidContext()) }
     single { provideUserDao(get()) }
+    single { provideNewsDao(get()) }
 }
 
 fun provideDatabase(context: Context) =
     Room.databaseBuilder(context, AppDatabase::class.java, "database").build()
 
 fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
+fun provideNewsDao(appDatabase: AppDatabase) = appDatabase.newsDao()
 
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(ConnectivityInterceptor(context))
