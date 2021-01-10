@@ -56,6 +56,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/filterDialogFragment"
+            app:destination="@id/filterDialogFragment" />
     </fragment>
 
     <fragment
@@ -67,4 +70,9 @@
             android:name="news"
             app:argType="br.com.fornaro.mesanews.domain.models.News" />
     </fragment>
+    <dialog
+        android:id="@+id/filterDialogFragment"
+        android:name="br.com.fornaro.mesanews.features.filter.FilterDialogFragment"
+        android:label="dialog_fragment_filter"
+        tools:layout="@layout/dialog_fragment_filter" />
 </navigation>

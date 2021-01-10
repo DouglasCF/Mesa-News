@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentFeedBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -49,6 +50,7 @@ class FeedFragment : Fragment() {
         setupNewsRecyclerView()
         setupViewModel()
         setupError()
+        setupToolbar()
     }
 
     private fun setupHighlightsRecyclerView() = with(binding.highlightsRecycler) {
@@ -67,6 +69,15 @@ class FeedFragment : Fragment() {
 
     private fun setupError() = with(binding.error.tryAgainButton) {
         setOnClickListener { viewModel.getNews() }
+    }
+
+    private fun setupToolbar() = with(binding.toolbar) {
+        setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.feed_filter -> findNavController().navigate(R.id.filterDialogFragment)
+            }
+            true
+        }
     }
 
     private fun handleState(state: FeedState) {
