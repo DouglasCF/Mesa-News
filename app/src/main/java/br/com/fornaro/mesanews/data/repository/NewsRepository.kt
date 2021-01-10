@@ -1,6 +1,5 @@
 package br.com.fornaro.mesanews.data.repository
 
-import android.util.Log
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
@@ -32,27 +31,15 @@ class NewsRepository(
 
     suspend fun getHighlightsNews() =
         newsRemoteDataSource.fetchHighlights(authenticationRepository.getToken())
-            .onEach {
-                it.forEach { news -> news.copy(isFavorite = isFavorite(news)) }
-                Log.d("AAB", "onEach getHighlightsNews")
-            }
+            .onEach { it.forEach { news -> news.isFavorite = isFavorite(news) } }
             .flowOn(dispatcherMap.io)
-            .collect {
-                Log.d("AAB", "collect getHighlightsNews")
-                _highlights.sendBlocking(it)
-            }
+            .collect { _highlights.sendBlocking(it) }
 
     suspend fun getNews() =
         newsRemoteDataSource.fetchNews(authenticationRepository.getToken())
-            .onEach {
-                it.forEach { news -> news.copy(isFavorite = isFavorite(news)) }
-                Log.d("AAB", "onEach getNews")
-            }
+            .onEach { it.forEach { news -> news.isFavorite = isFavorite(news) } }
             .flowOn(dispatcherMap.io)
-            .collect {
-                Log.d("AAB", "collect getNews")
-                _news.sendBlocking(it)
-            }
+            .collect { _news.sendBlocking(it) }
 
     suspend fun updateFavoriteNews(news: News, isFavorite: Boolean) {
         newsLocalDataSource.updateFavorite(news.title, isFavorite)
