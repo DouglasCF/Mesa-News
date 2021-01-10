@@ -8,6 +8,7 @@
     <string name="error_invalid_email">Invalid email</string>
     <string name="error_invalid_password">Invalid password</string>
     <string name="error_invalid_confirm_password">Invalid confirm password</string>
+    <string name="error_try_again_button">Try again</string>
 
     <!-- Login -->
     <string name="login_title">Sign In to Mesa News</string>
