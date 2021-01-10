@@ -10,4 +10,4 @@ class InvalidConfirmPasswordException : Exception("Confirm password is invalid")
 
 class InvalidDateFormatException : Exception("Date format is invalid")
 
-class InvalidTokenException : Exception("Token is invalid")
+class UserNotLoggedIn : java.lang.Exception("User is not logged in")

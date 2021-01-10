@@ -11,23 +11,23 @@ class AuthenticationRepository(
     private val dispatcherMap: DispatcherMap
 ) {
 
-    val token get() = localDataSource.token
+    val isUserLogged get() = !localDataSource.email.isNullOrBlank()
 
-    val isUserLogged get() = !token.isNullOrBlank()
+    suspend fun getToken() = withContext(dispatcherMap.io) { localDataSource.getToken() }
 
     suspend fun signUp(name: String, email: String, password: String) =
         withContext(dispatcherMap.io) {
             remoteDataSource.signUp(name = name, email = email, password = password)
-                .also { saveToken(it.token) }
+                .also { saveUser(email, it.token) }
         }
 
     suspend fun signIn(email: String, password: String) =
         withContext(dispatcherMap.io) {
             remoteDataSource.signIn(email = email, password = password)
-                .also { saveToken(it.token) }
+                .also { saveUser(email, it.token) }
         }
 
-    private fun saveToken(token: String) {
-        localDataSource.token = token
+    private suspend fun saveUser(email: String, token: String) {
+        localDataSource.saveUser(email, token)
     }
 }

@@ -2,7 +2,6 @@ package br.com.fornaro.mesanews.data.repository
 
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
-import br.com.fornaro.mesanews.domain.exceptions.InvalidTokenException
 import kotlinx.coroutines.withContext
 
 class NewsRepository(
@@ -12,12 +11,11 @@ class NewsRepository(
 ) {
 
     suspend fun getHighlightsNews() = withContext(dispatcherMap.io) {
-        authenticationRepository.token?.let { newsRemoteDataSource.fetchHighlights(it) }
-            ?: throw InvalidTokenException()
+        newsRemoteDataSource.fetchHighlights(authenticationRepository.getToken())
+
     }
 
     suspend fun getNews() = withContext(dispatcherMap.io) {
-        authenticationRepository.token?.let { newsRemoteDataSource.fetchNews(it) }
-            ?: throw InvalidTokenException()
+        newsRemoteDataSource.fetchNews(authenticationRepository.getToken())
     }
 }

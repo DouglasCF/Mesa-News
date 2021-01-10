@@ -18,7 +18,7 @@ class ExceptionMapper(
         Pair(InvalidEmailException::class, ErrorType.INVALID_EMAIL),
         Pair(InvalidPasswordException::class, ErrorType.INVALID_PASSWORD),
         Pair(InvalidConfirmPasswordException::class, ErrorType.INVALID_CONFIRM_PASSWORD),
-        Pair(InvalidTokenException::class, ErrorType.INVALID_TOKEN)
+        Pair(UserNotLoggedIn::class, ErrorType.USER_NOT_LOGGED_IN)
     )
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {

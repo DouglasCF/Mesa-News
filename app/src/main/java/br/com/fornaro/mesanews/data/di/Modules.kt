@@ -1,12 +1,14 @@
 package br.com.fornaro.mesanews.data.di
 
 import android.content.Context
+import androidx.room.Room
 import br.com.fornaro.mesanews.BuildConfig
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.dispatchers.MainDispatcherMap
 import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
+import br.com.fornaro.mesanews.data.source.local.database.AppDatabase
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.api.ConnectivityInterceptor
@@ -49,7 +51,7 @@ private val remoteDataSourceModules = module {
 }
 
 private val localDataSourceModules = module {
-    single { AuthenticationLocalDataSource(context = androidContext()) }
+    single { AuthenticationLocalDataSource(context = androidContext(), userDao = get()) }
 }
 
 private val repositoryModules = module {
@@ -81,6 +83,16 @@ private val mapperModules = module {
     single { NewsRemoteMapper }
 }
 
+private val databaseModules = module {
+    single { provideDatabase(androidContext()) }
+    single { provideUserDao(get()) }
+}
+
+fun provideDatabase(context: Context) =
+    Room.databaseBuilder(context, AppDatabase::class.java, "database").build()
+
+fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
+
 fun providesOkHttpClient(context: Context): OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(ConnectivityInterceptor(context))
     .build()
@@ -104,4 +116,5 @@ val dataModules = networkModules +
         localDataSourceModules +
         repositoryModules +
         mapperModules +
-        dispatcherModules
+        dispatcherModules +
+        databaseModules
