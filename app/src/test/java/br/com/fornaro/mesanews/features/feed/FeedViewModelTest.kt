@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.domain.enums.ErrorType
 import br.com.fornaro.mesanews.domain.models.News
+import br.com.fornaro.mesanews.domain.usecase.UpdateFavoriteUseCase
 import br.com.fornaro.mesanews.tools.BaseCoroutinesTest
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -26,12 +27,16 @@ class FeedViewModelTest : BaseCoroutinesTest() {
     @MockK
     private lateinit var newsRepository: NewsRepository
 
+    @MockK
+    private lateinit var updateFavoriteUseCase: UpdateFavoriteUseCase
+
     @Before
     fun setup() {
         MockKAnnotations.init(this)
 
         viewModel = FeedViewModel(
-            newsRepository = newsRepository
+            newsRepository = newsRepository,
+            updateFavoriteUseCase = updateFavoriteUseCase
         )
     }
 
