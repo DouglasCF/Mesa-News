@@ -31,5 +31,12 @@
 
     <!-- Feed -->
     <string name="feed_highlights_title">Highlights</string>
+    <string name="feed_news_title">Latest news</string>
+
+    <!-- Highlights Item -->
+    <string name="highlights_item_favorite_button_description">Favorite</string>
+
+    <!-- News Item -->
+    <string name="news_item_favorite_button_description">Favorite</string>
 
 </resources>

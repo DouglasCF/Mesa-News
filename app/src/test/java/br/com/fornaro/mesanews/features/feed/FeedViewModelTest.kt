@@ -38,13 +38,16 @@ class FeedViewModelTest : BaseCoroutinesTest() {
     @Test
     fun `should load feed successfully`() {
         val highlights = mockk<List<News>>()
+        val news = mockk<List<News>>()
         val data = FeedState.Success(
-            highlights = highlights
+            highlights = highlights,
+            news = news
         )
 
         coEvery { newsRepository.getHighlightsNews() } returns highlights
+        coEvery { newsRepository.getNews() } returns news
 
-        viewModel.getHighlightsNews()
+        viewModel.getNews()
 
         assertEquals(data, viewModel.state.value)
     }
@@ -53,7 +56,7 @@ class FeedViewModelTest : BaseCoroutinesTest() {
     fun `should not load feed when an error happens`() {
         coEvery { newsRepository.getHighlightsNews() } throws Exception()
 
-        viewModel.getHighlightsNews()
+        viewModel.getNews()
 
         assertEquals(FeedState.Error(ErrorType.GENERIC_ERROR), viewModel.state.value)
     }

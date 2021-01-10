@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="news"
+            type="br.com.fornaro.mesanews.domain.models.News" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            image_url="@{news.imageUrl}"
+            placeholder="@{@drawable/ic_image}"
+            android:layout_width="@dimen/news_item_layout_width_image"
+            android:layout_height="@dimen/news_item_layout_height_image"
+            android:layout_marginTop="@dimen/news_item_margin_top_image"
+            android:layout_marginEnd="@dimen/news_item_margin_end_image"
+            android:layout_marginBottom="@dimen/news_item_margin_bottom_image"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_image" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/news_item_margin_end_favorite_button"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/news_item_favorite_button_description"
+            android:paddingStart="@dimen/news_item_padding_start_favorite_button"
+            android:paddingEnd="@dimen/news_item_padding_end_favorite_button"
+            android:paddingBottom="@dimen/news_item_padding_bottom_favorite_button"
+            android:src="@{ news.isFavorite ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_bookmark" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/news_item_margin_start_title"
+            android:layout_marginTop="@dimen/news_item_margin_top_title"
+            android:layout_marginEnd="@dimen/news_item_margin_end_title"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{news.title}"
+            android:textSize="@dimen/news_item_text_size_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/news_item_margin_top_description"
+            android:layout_marginEnd="@dimen/news_item_margin_end_description"
+            android:layout_marginBottom="@dimen/news_item_margin_bottom_description"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{news.description}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image"
+            app:layout_constraintStart_toStartOf="@id/title_text"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:text="@tools:sample/lorem/random" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

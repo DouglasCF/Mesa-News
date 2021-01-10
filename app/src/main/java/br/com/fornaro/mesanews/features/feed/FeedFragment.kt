@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentFeedBinding
 import br.com.fornaro.mesanews.domain.enums.ErrorType
@@ -16,8 +17,12 @@ class FeedFragment : Fragment() {
 
     private val viewModel: FeedViewModel by viewModel()
 
-    private val highlightsAdapter: HighlightsAdapter by lazy(LazyThreadSafetyMode.NONE) {
+    private val highlightsAdapter by lazy(LazyThreadSafetyMode.NONE) {
         HighlightsAdapter()
+    }
+
+    private val newsAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        NewsAdapter()
     }
 
     private var _binding: FragmentFeedBinding? = null
@@ -37,6 +42,7 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupHighlightsRecyclerView()
+        setupNewsRecyclerView()
         setupViewModel()
     }
 
@@ -44,9 +50,14 @@ class FeedFragment : Fragment() {
         adapter = highlightsAdapter
     }
 
+    private fun setupNewsRecyclerView() = with(binding.newsRecycler) {
+        adapter = newsAdapter
+        addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+    }
+
     private fun setupViewModel() = with(viewModel) {
         state.observe(viewLifecycleOwner, ::handleState)
-        getHighlightsNews()
+        getNews()
     }
 
     private fun handleState(state: FeedState) {
@@ -74,6 +85,7 @@ class FeedFragment : Fragment() {
 
     private fun handleSuccess(data: FeedState.Success) {
         highlightsAdapter.data = data.highlights
+        newsAdapter.data = data.news
     }
 
     override fun onDestroyView() {

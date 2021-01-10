@@ -17,7 +17,7 @@ class FeedViewModel(
     private val _state = MutableLiveData<FeedState>()
     val state: LiveData<FeedState> get() = _state
 
-    fun getHighlightsNews() {
+    fun getNews() {
         val handler = ExceptionMapper { error ->
             _state.value = FeedState.Error(error)
         }
@@ -25,7 +25,8 @@ class FeedViewModel(
         viewModelScope.launch(handler) {
             _state.value = FeedState.Loading
             val highlights = newsRepository.getHighlightsNews()
-            _state.value = FeedState.Success(highlights = highlights)
+            val news = newsRepository.getNews()
+            _state.value = FeedState.Success(highlights = highlights, news = news)
         }
     }
 }
@@ -34,6 +35,7 @@ sealed class FeedState {
     object Loading : FeedState()
     data class Error(val error: ErrorType) : FeedState()
     data class Success(
-        val highlights: List<News>
+        val highlights: List<News>,
+        val news: List<News>
     ) : FeedState()
 }
