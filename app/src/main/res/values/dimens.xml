@@ -43,12 +43,34 @@
     <dimen name="feed_margin_top_highlights_text">16dp</dimen>
     <dimen name="feed_margin_start_highlights_text">16dp</dimen>
     <dimen name="feed_text_size_highlights_text">30sp</dimen>
+    <dimen name="feed_margin_start_news_text">16dp</dimen>
+    <dimen name="feed_margin_top_news_text">16dp</dimen>
+    <dimen name="feed_text_size_news_text">30sp</dimen>
+    <dimen name="feed_margin_top_news_recycler">16dp</dimen>
 
-    <!-- Item Highlights -->
-    <dimen name="item_highlights_layout_height_card_view">260dp</dimen>
-    <dimen name="item_highlights_radius_card_view">8dp</dimen>
-    <dimen name="item_highlights_margin_bottom_description">16dp</dimen>
-    <dimen name="item_highlights_margin_bottom_title">16dp</dimen>
-    <dimen name="item_highlights_text_size_title">20sp</dimen>
-    <dimen name="item_highlights_min_size_favorite_button">48dp</dimen>
+    <!-- Highlights Item -->
+    <dimen name="highlights_item_layout_height_card_view">260dp</dimen>
+    <dimen name="highlights_item_radius_card_view">8dp</dimen>
+    <dimen name="highlights_item_margin_bottom_description">16dp</dimen>
+    <dimen name="highlights_item_margin_bottom_title">16dp</dimen>
+    <dimen name="highlights_item_text_size_title">20sp</dimen>
+    <dimen name="highlights_item_min_size_favorite_button">48dp</dimen>
+
+    <!-- News Item -->
+    <dimen name="news_item_layout_height_image">90dp</dimen>
+    <dimen name="news_item_layout_width_image">90dp</dimen>
+    <dimen name="news_item_margin_top_image">16dp</dimen>
+    <dimen name="news_item_margin_bottom_image">16dp</dimen>
+    <dimen name="news_item_margin_end_image">16dp</dimen>
+    <dimen name="news_item_margin_end_favorite_button">8dp</dimen>
+    <dimen name="news_item_padding_end_favorite_button">8dp</dimen>
+    <dimen name="news_item_padding_start_favorite_button">8dp</dimen>
+    <dimen name="news_item_padding_bottom_favorite_button">8dp</dimen>
+    <dimen name="news_item_margin_start_title">16dp</dimen>
+    <dimen name="news_item_margin_top_title">16dp</dimen>
+    <dimen name="news_item_margin_end_title">16dp</dimen>
+    <dimen name="news_item_text_size_title">24sp</dimen>
+    <dimen name="news_item_margin_end_description">16dp</dimen>
+    <dimen name="news_item_margin_bottom_description">16dp</dimen>
+    <dimen name="news_item_margin_top_description">16dp</dimen>
 </resources>

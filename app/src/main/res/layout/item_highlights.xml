@@ -12,8 +12,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_highlights_layout_height_card_view"
-        app:cardCornerRadius="@dimen/item_highlights_radius_card_view"
+        android:layout_height="@dimen/highlights_item_layout_height_card_view"
+        app:cardCornerRadius="@dimen/highlights_item_radius_card_view"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,20 +34,22 @@
                 android:background="@color/front_image" />
 
             <ImageButton
-                android:layout_width="@dimen/item_highlights_min_size_favorite_button"
-                android:layout_height="@dimen/item_highlights_min_size_favorite_button"
+                android:layout_width="@dimen/highlights_item_min_size_favorite_button"
+                android:layout_height="@dimen/highlights_item_min_size_favorite_button"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/news_item_favorite_button_description"
                 android:src="@{ news.isFavorite ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
                 android:tint="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_bookmark" />
 
             <TextView
                 android:id="@+id/description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="@dimen/item_highlights_margin_bottom_description"
+                android:layout_marginBottom="@dimen/highlights_item_margin_bottom_description"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{news.description}"
@@ -60,12 +62,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="@dimen/item_highlights_margin_bottom_title"
+                android:layout_marginBottom="@dimen/highlights_item_margin_bottom_title"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{news.title}"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/item_highlights_text_size_title"
+                android:textSize="@dimen/highlights_item_text_size_title"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/description_text"
                 tools:text="@tools:sample/lorem/random" />

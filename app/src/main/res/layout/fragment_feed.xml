@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -46,14 +46,32 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_highlights" />
 
+                <TextView
+                    android:id="@+id/news_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/feed_margin_start_news_text"
+                    android:layout_marginTop="@dimen/feed_margin_top_news_text"
+                    android:text="@string/feed_news_title"
+                    android:nestedScrollingEnabled="false"
+                    android:textSize="@dimen/feed_text_size_news_text"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/highlights_recycler" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/news_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/highlights_recycler" />
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="@dimen/feed_margin_top_news_recycler"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/news_text"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_news" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <include
             android:id="@+id/loading"
