@@ -18,6 +18,8 @@ class FeedViewModel(
     val state: LiveData<FeedState> get() = _state
 
     fun getNews() {
+        if (state.value != null) return
+
         val handler = ExceptionMapper { error ->
             _state.value = FeedState.Error(error)
         }

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.fornaro.mesanews.databinding.ItemHighlightsBinding
 import br.com.fornaro.mesanews.domain.models.News
 
-class HighlightsAdapter : RecyclerView.Adapter<HighlightsAdapter.ViewHolder>() {
+class HighlightsAdapter(
+    private val action: (News) -> Unit
+) : RecyclerView.Adapter<HighlightsAdapter.ViewHolder>() {
 
     var data = emptyList<News>()
         set(value) {
@@ -23,15 +25,17 @@ class HighlightsAdapter : RecyclerView.Adapter<HighlightsAdapter.ViewHolder>() {
             )
         )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+        holder.bind(data[position], action)
 
     override fun getItemCount() = data.size
 
     class ViewHolder(
         private val binding: ItemHighlightsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(news: News) = with(binding) {
+        fun bind(news: News, action: (News) -> Unit) = with(binding) {
             this.news = news
+            container.setOnClickListener { action.invoke(news) }
             executePendingBindings()
         }
     }

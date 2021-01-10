@@ -11,8 +11,12 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/highlights_item_layout_height_card_view"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="@dimen/highlights_item_radius_card_view"
         app:cardUseCompatPadding="true">
 

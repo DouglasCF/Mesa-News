@@ -15,11 +15,10 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter(value = ["image_url", "placeholder", "center_crop"], requireAll = false)
+    @BindingAdapter(value = ["image_url", "placeholder"], requireAll = false)
     fun ImageView.loadImage(
         imageUrl: String?,
-        placeholder: Drawable?,
-        centerCrop: Boolean = false
+        placeholder: Drawable?
     ) {
         imageUrl?.let {
             load(it) {
