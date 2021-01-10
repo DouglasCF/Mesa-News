@@ -9,46 +9,61 @@ import br.com.fornaro.mesanews.domain.enums.ErrorType
 import br.com.fornaro.mesanews.domain.exceptions.ExceptionMapper
 import br.com.fornaro.mesanews.domain.models.News
 import br.com.fornaro.mesanews.domain.usecase.UpdateFavoriteUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 class FeedViewModel(
     private val newsRepository: NewsRepository,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase
 ) : ViewModel() {
 
+    val content = FeedContent()
+
     private val _state = MutableLiveData<FeedState>()
     val state: LiveData<FeedState> get() = _state
 
-    fun getNews() {
-        if (state.value != null) return
-
+    init {
+        _state.value = FeedState.Loading
         val handler = ExceptionMapper { error ->
             _state.value = FeedState.Error(error)
         }
+        viewModelScope.launch(handler) { newsRepository.getHighlightsNews() }
+        viewModelScope.launch(handler) { newsRepository.getNews() }
 
         viewModelScope.launch(handler) {
-            _state.value = FeedState.Loading
-            val highlights = newsRepository.getHighlightsNews()
-            val news = newsRepository.getNews()
-            _state.value = FeedState.Success(highlights = highlights, news = news)
+            newsRepository.highlights.collect { news -> updateContent(highlights = news) }
+        }
+        viewModelScope.launch(handler) {
+            newsRepository.news.collect { news -> updateContent(news = news) }
         }
     }
 
     fun favoriteNews(news: News) {
         viewModelScope.launch {
             updateFavoriteUseCase.execute(news)
-            (state.value as FeedState.Success).let {
-                _state.value = FeedState.Success(
-                    highlights = it.highlights,
-                    news = it.news
-                )
-            }
+        }
+    }
+
+    private fun updateContent(highlights: List<News>? = null, news: List<News>? = null) {
+        highlights?.let { content.highlights = it }
+        news?.let { content.news = it }
+        if (content.highlights.isNotEmpty() && content.news.isNotEmpty()) {
+            _state.value = FeedState.Success(content)
         }
     }
 }
 
+data class FeedContent(
+    var highlights: List<News> = emptyList(),
+    var news: List<News> = emptyList()
+)
+
 sealed class FeedState {
     object Loading : FeedState()
     data class Error(val error: ErrorType) : FeedState()
-    data class Success(val highlights: List<News>, val news: List<News>) : FeedState()
+    data class Success(val content: FeedContent) : FeedState()
 }

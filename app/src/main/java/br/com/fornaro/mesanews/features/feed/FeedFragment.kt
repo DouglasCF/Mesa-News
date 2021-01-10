@@ -64,11 +64,13 @@ class FeedFragment : Fragment() {
 
     private fun setupViewModel() = with(viewModel) {
         state.observe(viewLifecycleOwner, ::handleState)
-        getNews()
+//        getNews()
     }
 
     private fun setupError() = with(binding.error.tryAgainButton) {
-        setOnClickListener { viewModel.getNews() }
+        setOnClickListener {
+//            viewModel.getNews()
+        }
     }
 
     private fun setupToolbar() = with(binding.toolbar) {
@@ -86,7 +88,7 @@ class FeedFragment : Fragment() {
         when (state) {
             is FeedState.Loading -> handleLoading(true)
             is FeedState.Error -> handleError(true)
-            is FeedState.Success -> handleSuccess(state)
+            is FeedState.Success -> handleSuccess(state.content)
         }
     }
 
@@ -102,9 +104,9 @@ class FeedFragment : Fragment() {
         binding.error.root.isVisible = error
     }
 
-    private fun handleSuccess(data: FeedState.Success) {
-        highlightsAdapter.data = data.highlights
-        newsAdapter.data = data.news
+    private fun handleSuccess(content: FeedContent) {
+        highlightsAdapter.data = content.highlights
+        newsAdapter.data = content.news
     }
 
     override fun onDestroyView() {

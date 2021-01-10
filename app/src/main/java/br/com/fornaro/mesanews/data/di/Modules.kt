@@ -43,7 +43,8 @@ private val remoteDataSourceModules = module {
     }
 
     single {
-        NewsRemoteDataSource(
+
+    NewsRemoteDataSource(
             api = get(),
             highlightsMapper = get(),
             newsMapper = get()
