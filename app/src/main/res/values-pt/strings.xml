@@ -33,6 +33,7 @@
     <!-- Feed -->
     <string name="feed_highlights_title">Destaques</string>
     <string name="feed_news_title">Últimas notícias</string>
+    <string name="feed_filter">Filtro</string>
 
     <!-- Highlights Item -->
     <string name="highlights_item_favorite_button_description">Favorito</string>

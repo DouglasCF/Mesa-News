@@ -47,6 +47,7 @@
     <dimen name="feed_margin_top_news_text">16dp</dimen>
     <dimen name="feed_text_size_news_text">30sp</dimen>
     <dimen name="feed_margin_top_news_recycler">16dp</dimen>
+    <dimen name="feed_layout_height_underscore">2dp</dimen>
 
     <!-- Highlights Item -->
     <dimen name="highlights_item_layout_height_card_view">260dp</dimen>

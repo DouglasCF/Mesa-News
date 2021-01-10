@@ -81,11 +81,13 @@ class FeedFragment : Fragment() {
 
     private fun handleLoading(loading: Boolean) {
         binding.container.isVisible = !loading
+        binding.toolbar.isVisible = !loading
         binding.loading.isVisible = loading
     }
 
     private fun handleError(error: Boolean) {
         binding.container.isVisible = !error
+        binding.toolbar.isVisible = !error
         binding.error.root.isVisible = error
     }
 
