@@ -4,11 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
-import br.com.fornaro.mesanews.domain.exceptions.InvalidTokenException
 import br.com.fornaro.mesanews.domain.models.News
 import br.com.fornaro.mesanews.tools.UnitTestDispatcherMap
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -41,19 +43,12 @@ class NewsRepositoryTest {
         )
     }
 
-    @Test(expected = InvalidTokenException::class)
-    fun `should throw exception when token is null while getting highlights`() = runBlockingTest {
-        every { authenticationRepository.token } returns null
-
-        repository.getHighlightsNews()
-    }
-
     @Test
     fun `should load highlights news successfully`() = runBlockingTest {
         val token = "token"
         val highlightsNews = mockk<List<News>>()
 
-        every { authenticationRepository.token } returns token
+        coEvery { authenticationRepository.getToken() } returns token
         coEvery { newsRemoteDataSource.fetchHighlights(token) } returns highlightsNews
 
         val result = repository.getHighlightsNews()
@@ -62,19 +57,12 @@ class NewsRepositoryTest {
         coVerify { newsRemoteDataSource.fetchHighlights(token) }
     }
 
-    @Test(expected = InvalidTokenException::class)
-    fun `should throw exception when token is null while getting news`() = runBlockingTest {
-        every { authenticationRepository.token } returns null
-
-        repository.getNews()
-    }
-
     @Test
     fun `should load news successfully`() = runBlockingTest {
         val token = "token"
         val news = mockk<List<News>>()
 
-        every { authenticationRepository.token } returns token
+        coEvery { authenticationRepository.getToken() } returns token
         coEvery { newsRemoteDataSource.fetchNews(token) } returns news
 
         val result = repository.getNews()

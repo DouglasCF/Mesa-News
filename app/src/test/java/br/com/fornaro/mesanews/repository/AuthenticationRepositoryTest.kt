@@ -8,10 +8,9 @@ import br.com.fornaro.mesanews.domain.models.Authentication
 import br.com.fornaro.mesanews.tools.UnitTestDispatcherMap
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
@@ -26,7 +25,7 @@ class AuthenticationRepositoryTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @MockK
+    @RelaxedMockK
     private lateinit var remoteDataSource: AuthenticationRemoteDataSource
 
     @RelaxedMockK
@@ -46,19 +45,19 @@ class AuthenticationRepositoryTest {
     }
 
     @Test
-    fun `should return token from local data source`() {
+    fun `should return token from local data source`() = runBlockingTest {
         val token = "token"
-        every { localDataSource.token } returns token
+        coEvery { localDataSource.getToken() } returns token
 
-        val result = repository.token
+        val result = repository.getToken()
 
         assertEquals(token, result)
     }
 
     @Test
-    fun `user should be logged in if token is valid`() {
-        val token = "token"
-        every { localDataSource.token } returns token
+    fun `user should be logged in if email is filled out`() {
+        val email = "email"
+        every { localDataSource.email } returns email
 
         val result = repository.isUserLogged
 
@@ -67,7 +66,7 @@ class AuthenticationRepositoryTest {
 
     @Test
     fun `user should be logged out if token is null`() {
-        every { localDataSource.token } returns null
+        every { localDataSource.email } returns null
 
         val result = repository.isUserLogged
 
@@ -75,37 +74,39 @@ class AuthenticationRepositoryTest {
     }
 
     @Test
-    fun `sign up should save token when successfully`() = runBlockingTest {
+    fun `sign up should save user info when successfully`() = runBlockingTest {
         val token = "token"
+        val email = "email"
         val authentication = Authentication(token = token)
 
         coEvery {
             remoteDataSource.signUp(
                 anyString(),
-                anyString(),
+                email,
                 anyString()
             )
         } returns authentication
 
-        repository.signUp(anyString(), anyString(), anyString())
+        repository.signUp(anyString(), email, anyString())
 
-        verify { localDataSource.token = token }
+        coVerify { localDataSource.saveUser(email, token) }
     }
 
     @Test
-    fun `sign in should save token when successfully`() = runBlockingTest {
+    fun `sign in should save user info when successfully`() = runBlockingTest {
         val token = "token"
+        val email = "email"
         val authentication = Authentication(token = token)
 
         coEvery {
             remoteDataSource.signIn(
-                anyString(),
+                email,
                 anyString()
             )
         } returns authentication
 
-        repository.signIn(anyString(), anyString())
+        repository.signIn(email, anyString())
 
-        verify { localDataSource.token = token }
+        coVerify { localDataSource.saveUser(email, token) }
     }
 }

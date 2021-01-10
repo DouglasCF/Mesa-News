@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.fornaro.mesanews.data.source.local.database.daos.UserDao
 import br.com.fornaro.mesanews.data.source.local.database.entities.UserEntity
-import br.com.fornaro.mesanews.domain.exceptions.UserNotLoggedIn
+import br.com.fornaro.mesanews.domain.exceptions.UserNotLoggedInException
 
 class AuthenticationLocalDataSource(
     context: Context,
@@ -21,7 +21,8 @@ class AuthenticationLocalDataSource(
             sharedPreferences.edit { putString(EMAIL_KEY, value) }
         }
 
-    suspend fun getToken() = email?.let { userDao.selectToken(it) } ?: throw UserNotLoggedIn()
+    suspend fun getToken() =
+        email?.let { userDao.selectToken(it) } ?: throw UserNotLoggedInException()
 
     suspend fun saveUser(email: String, token: String) {
         val user = UserEntity(email, token)
