@@ -27,4 +27,8 @@ class NewsRepository(
         withContext(dispatcherMap.io) {
             newsLocalDataSource.updateFavorite(news.title, isFavorite)
         }
+
+    suspend fun isFavorite(news: News) = withContext(dispatcherMap.io) {
+        newsLocalDataSource.isFavorite(news.title)
+    }
 }
