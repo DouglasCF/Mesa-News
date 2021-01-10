@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "news")
 data class NewsEntity(
-    @PrimaryKey val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long? = null,
     val user: String,
     val title: String,
     val isFavorite: Boolean

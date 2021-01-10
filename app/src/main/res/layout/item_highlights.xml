@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="br.com.fornaro.mesanews.features.feed.FeedViewModel" />
+
+        <variable
             name="news"
             type="br.com.fornaro.mesanews.domain.models.News" />
     </data>
@@ -42,6 +46,7 @@
                 android:layout_height="@dimen/highlights_item_min_size_favorite_button"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/news_item_favorite_button_description"
+                android:onClick="@{() -> viewModel.favoriteNews(news)}"
                 android:src="@{ news.isFavorite ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
                 android:tint="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"

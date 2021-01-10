@@ -7,7 +7,8 @@ import org.koin.dsl.module
 private val viewModelModules = module {
     viewModel {
         FeedViewModel(
-            newsRepository = get()
+            newsRepository = get(),
+            updateFavoriteUseCase = get()
         )
     }
 }

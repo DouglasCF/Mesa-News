@@ -8,10 +8,12 @@ import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.domain.enums.ErrorType
 import br.com.fornaro.mesanews.domain.exceptions.ExceptionMapper
 import br.com.fornaro.mesanews.domain.models.News
+import br.com.fornaro.mesanews.domain.usecase.UpdateFavoriteUseCase
 import kotlinx.coroutines.launch
 
 class FeedViewModel(
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase
 ) : ViewModel() {
 
     private val _state = MutableLiveData<FeedState>()
@@ -31,13 +33,22 @@ class FeedViewModel(
             _state.value = FeedState.Success(highlights = highlights, news = news)
         }
     }
+
+    fun favoriteNews(news: News) {
+        viewModelScope.launch {
+            updateFavoriteUseCase.execute(news)
+            (state.value as FeedState.Success).let {
+                _state.value = FeedState.Success(
+                    highlights = it.highlights,
+                    news = it.news
+                )
+            }
+        }
+    }
 }
 
 sealed class FeedState {
     object Loading : FeedState()
     data class Error(val error: ErrorType) : FeedState()
-    data class Success(
-        val highlights: List<News>,
-        val news: List<News>
-    ) : FeedState()
+    data class Success(val highlights: List<News>, val news: List<News>) : FeedState()
 }

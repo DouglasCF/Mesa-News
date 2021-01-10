@@ -16,14 +16,14 @@ class FeedFragment : Fragment() {
     private val viewModel: FeedViewModel by viewModel()
 
     private val highlightsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        HighlightsAdapter {
+        HighlightsAdapter(viewModel) {
             val direction = FeedFragmentDirections.newsDetailFragment(it)
             findNavController().navigate(direction)
         }
     }
 
     private val newsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        NewsAdapter {
+        NewsAdapter(viewModel) {
             val direction = FeedFragmentDirections.newsDetailFragment(it)
             findNavController().navigate(direction)
         }

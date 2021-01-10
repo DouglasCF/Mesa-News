@@ -7,6 +7,7 @@ import br.com.fornaro.mesanews.databinding.ItemNewsBinding
 import br.com.fornaro.mesanews.domain.models.News
 
 class NewsAdapter(
+    private val viewModel: FeedViewModel,
     private val action: (News) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -22,7 +23,7 @@ class NewsAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ).apply { viewModel = this@NewsAdapter.viewModel }
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =

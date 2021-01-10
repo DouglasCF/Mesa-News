@@ -7,6 +7,7 @@ import br.com.fornaro.mesanews.databinding.ItemHighlightsBinding
 import br.com.fornaro.mesanews.domain.models.News
 
 class HighlightsAdapter(
+    private val viewModel: FeedViewModel,
     private val action: (News) -> Unit
 ) : RecyclerView.Adapter<HighlightsAdapter.ViewHolder>() {
 
@@ -22,7 +23,7 @@ class HighlightsAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ).apply { viewModel = this@HighlightsAdapter.viewModel }
         )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
