@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.com.fornaro.mesanews.databinding.FragmentFeedBinding
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -15,11 +16,17 @@ class FeedFragment : Fragment() {
     private val viewModel: FeedViewModel by viewModel()
 
     private val highlightsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        HighlightsAdapter()
+        HighlightsAdapter {
+            val direction = FeedFragmentDirections.newsDetailFragment(it)
+            findNavController().navigate(direction)
+        }
     }
 
     private val newsAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        NewsAdapter()
+        NewsAdapter {
+            val direction = FeedFragmentDirections.newsDetailFragment(it)
+            findNavController().navigate(direction)
+        }
     }
 
     private var _binding: FragmentFeedBinding? = null

@@ -1,7 +1,10 @@
 package br.com.fornaro.mesanews.domain.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
+@Parcelize
 data class News(
     val title: String,
     val description: String,
@@ -10,7 +13,6 @@ data class News(
     val publishedAt: Calendar,
     val isHighlight: Boolean,
     val url: String,
-    val imageUrl: String
-) {
-    var isFavorite = false
-}
+    val imageUrl: String,
+    var isFavorite: Boolean = false
+) : Parcelable
