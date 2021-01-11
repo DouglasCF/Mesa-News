@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
-import br.com.fornaro.mesanews.data.source.local.cache.FilterCache
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.domain.models.News
 import br.com.fornaro.mesanews.tools.UnitTestDispatcherMap
@@ -36,9 +35,6 @@ class NewsRepositoryTest {
     @RelaxedMockK
     private lateinit var newsLocalDataSource: NewsLocalDataSource
 
-    @MockK
-    private lateinit var cache: FilterCache
-
     private lateinit var repository: NewsRepository
 
     @Before
@@ -49,7 +45,6 @@ class NewsRepositoryTest {
             authenticationRepository = authenticationRepository,
             newsRemoteDataSource = newsRemoteDataSource,
             newsLocalDataSource = newsLocalDataSource,
-            cache = cache,
             dispatcherMap = UnitTestDispatcherMap
         )
     }
