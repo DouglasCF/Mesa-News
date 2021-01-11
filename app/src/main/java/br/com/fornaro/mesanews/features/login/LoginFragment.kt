@@ -1,5 +1,6 @@
 package br.com.fornaro.mesanews.features.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +13,28 @@ import br.com.fornaro.mesanews.R
 import br.com.fornaro.mesanews.databinding.FragmentLoginBinding
 import br.com.fornaro.mesanews.domain.enums.ErrorType
 import br.com.fornaro.mesanews.extensions.toast
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+
+class LoginFragment : Fragment(), FacebookCallback<LoginResult> {
 
     private val viewModel: LoginViewModel by viewModel()
 
+    private val callbackManager = CallbackManager.Factory.create()
+
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        LoginManager.getInstance().registerCallback(callbackManager, this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +52,7 @@ class LoginFragment : Fragment() {
         setupCreateAccountButton()
         setupLoginButton()
         setupViewModel()
+        setupFacebookButton()
     }
 
     private fun setupLoginButton() = with(binding.loginButton) {
@@ -45,6 +61,12 @@ class LoginFragment : Fragment() {
                 email = binding.emailText.text.toString(),
                 password = binding.passwordText.text.toString()
             )
+        }
+    }
+
+    private fun setupFacebookButton() = with(binding.facebookButton) {
+        setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this@LoginFragment, listOf("email"))
         }
     }
 
@@ -76,6 +98,11 @@ class LoginFragment : Fragment() {
         findNavController().navigate(R.id.feedFragment)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -83,5 +110,14 @@ class LoginFragment : Fragment() {
 
     private fun setupCreateAccountButton() = with(binding.createAccountButton) {
         setOnClickListener { findNavController().navigate(R.id.createAccountFragment) }
+    }
+
+    override fun onSuccess(result: LoginResult?) {
+    }
+
+    override fun onCancel() {
+    }
+
+    override fun onError(error: FacebookException?) {
     }
 }

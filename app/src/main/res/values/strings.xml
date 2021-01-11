@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Mesa News</string>
 
+    <!-- Facebook -->
+    <string name="facebook_app_id" translatable="false">225453175804166</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb225453175804166</string>
+
     <!-- Error -->
     <string name="error_no_internet">No internet connection</string>
     <string name="error_generic_error">Something went wrong. Try again</string>
