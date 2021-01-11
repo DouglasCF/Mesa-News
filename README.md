@@ -27,3 +27,6 @@ Link for planning, tasks and future work: [https://www.notion.so/fornaro/MesaNew
 - Retrofit
 - Coil
 - Room
+
+## CI
+It's using Github Actions to test each pull request and when pushing to developer branch.
