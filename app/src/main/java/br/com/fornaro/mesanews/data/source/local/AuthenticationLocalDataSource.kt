@@ -1,6 +1,7 @@
 package br.com.fornaro.mesanews.data.source.local
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import br.com.fornaro.mesanews.data.source.local.database.daos.UserDao
 import br.com.fornaro.mesanews.data.source.local.database.entities.UserEntity
@@ -9,7 +10,10 @@ import br.com.fornaro.mesanews.domain.exceptions.UserNotLoggedInException
 class AuthenticationLocalDataSource(
     context: Context,
     private val userDao: UserDao
-) : PreferenceLocalDataSource(context) {
+) {
+
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     var email: String?
         get() = sharedPreferences.getString(EMAIL_KEY, null)
@@ -27,6 +31,7 @@ class AuthenticationLocalDataSource(
     }
 
     companion object {
+        private const val SHARED_PREFERENCES_NAME = "prefs_mesa_app"
         private const val EMAIL_KEY = "email_key"
     }
 }

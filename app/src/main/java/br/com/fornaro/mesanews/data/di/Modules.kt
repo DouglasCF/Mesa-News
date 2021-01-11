@@ -9,7 +9,6 @@ import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
-import br.com.fornaro.mesanews.data.source.local.PreferenceLocalDataSource
 import br.com.fornaro.mesanews.data.source.local.database.AppDatabase
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
@@ -62,8 +61,6 @@ private val localDataSourceModules = module {
             newsDao = get()
         )
     }
-
-    single { PreferenceLocalDataSource(context = androidContext()) }
 }
 
 private val repositoryModules = module {
@@ -78,7 +75,6 @@ private val repositoryModules = module {
     single {
         NewsRepository(
             authenticationRepository = get(),
-            preferenceLocalDataSource = get(),
             newsRemoteDataSource = get(),
             newsLocalDataSource = get(),
             dispatcherMap = get()

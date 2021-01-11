@@ -55,7 +55,7 @@ class FeedViewModel(
     private fun updateContent(highlights: List<News>? = null, news: List<News>? = null) {
         highlights?.let { content.highlights = it }
         news?.let { content.news = it }
-        if (content.highlights.isNotEmpty() && content.news.isNotEmpty()) {
+        if (content.highlights.isNotEmpty()) {
             _state.value = FeedState.Success(content)
         }
     }
