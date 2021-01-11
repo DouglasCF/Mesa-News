@@ -15,6 +15,7 @@ Link for planning, tasks and future work: [https://www.notion.so/fornaro/MesaNew
 - Kotlin
 - MVVM
 - UseCase
+- Repository
 - DataSource
 - Dependency Injection
 - Tests
