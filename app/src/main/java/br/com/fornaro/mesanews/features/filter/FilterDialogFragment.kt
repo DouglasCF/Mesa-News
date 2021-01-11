@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import br.com.fornaro.mesanews.databinding.DialogFragmentFilterBinding
 import br.com.fornaro.mesanews.domain.enums.FeedFilter
+import br.com.fornaro.mesanews.domain.models.FilterContent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,21 +31,21 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRadioButtons()
+        setupFilterButton()
         setupViewModel()
-    }
-
-    private fun setupRadioButtons() = with(binding) {
-        filterDateButton.setOnClickListener {
-            viewModel.filterNewsByDate()
-        }
-        filterFavoriteButton.setOnClickListener {
-            viewModel.filterNewsByFavorite()
-        }
     }
 
     private fun setupViewModel() = with(viewModel) {
         state.observe(viewLifecycleOwner, ::handleState)
+    }
+
+    private fun setupFilterButton() = with(binding.filterButton) {
+        setOnClickListener {
+            viewModel.applyFilter(
+                if (binding.filterDateButton.isChecked) FeedFilter.DATE else FeedFilter.FAVORITE,
+                binding.filterText.text.toString()
+            )
+        }
     }
 
     private fun handleState(state: FilterState) = when (state) {
@@ -56,9 +57,12 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         findNavController().navigateUp()
     }
 
-    private fun handleInitial(filter: FeedFilter) = when (filter) {
-        FeedFilter.DATE -> binding.filterDateButton.isChecked = true
-        FeedFilter.FAVORITE -> binding.filterFavoriteButton.isChecked = true
+    private fun handleInitial(filter: FilterContent) {
+        binding.filterText.setText(filter.text)
+        when (filter.type) {
+            FeedFilter.DATE -> binding.filterDateButton.isChecked = true
+            FeedFilter.FAVORITE -> binding.filterFavoriteButton.isChecked = true
+        }
     }
 
     override fun onDestroyView() {

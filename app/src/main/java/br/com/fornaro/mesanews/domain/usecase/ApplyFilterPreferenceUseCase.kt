@@ -7,7 +7,7 @@ class ApplyFilterPreferenceUseCase(
     private val newsRepository: NewsRepository
 ) {
 
-    suspend fun execute(filter: FeedFilter) {
-        newsRepository.applyFilter(filter)
+    suspend fun execute(filter: FeedFilter, textFilter: String) {
+        newsRepository.applyFilter(filter, textFilter)
     }
 }

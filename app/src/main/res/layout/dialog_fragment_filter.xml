@@ -12,24 +12,36 @@
         android:layout_height="wrap_content"
         tools:context=".features.filter.FilterDialogFragment">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/filter_guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/filter_start_guideline" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/filter_guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/filter_end_guideline" />
+
         <TextView
             android:id="@+id/filter_description_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="@dimen/filter_margin_top_description"
             android:text="@string/filter_description_text"
-            android:textSize="20sp"
+            android:textSize="@dimen/filter_text_size_description"
+            app:layout_constraintEnd_toEndOf="@id/filter_guide_end"
+            app:layout_constraintStart_toStartOf="@id/filter_guide_start"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
+            android:id="@+id/filter_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:clipToPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/filter_margin_top_radio_group"
             app:layout_constraintTop_toBottomOf="@id/filter_description_text">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -39,7 +51,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:button="@null"
                 android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="@dimen/filter_padding_horizontal_radio_option"
                 android:text="@string/filter_date_option" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -49,9 +61,33 @@
                 android:background="?attr/selectableItemBackground"
                 android:button="@null"
                 android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="@dimen/filter_padding_horizontal_radio_option"
                 android:text="@string/filter_favorite_option" />
         </RadioGroup>
+
+        <EditText
+            android:id="@+id/filter_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/filter_margin_top_text"
+            android:hint="@string/filter_text_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="@id/filter_guide_end"
+            app:layout_constraintStart_toStartOf="@id/filter_guide_start"
+            app:layout_constraintTop_toBottomOf="@id/filter_radio_group" />
+
+        <Button
+            android:id="@+id/filter_button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/filter_layout_height_button"
+            android:layout_marginTop="@dimen/filter_margin_top_button"
+            android:layout_marginBottom="@dimen/filter_margin_bottom_button"
+            android:text="@string/filter_button_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/filter_guide_end"
+            app:layout_constraintStart_toStartOf="@id/filter_guide_start"
+            app:layout_constraintTop_toBottomOf="@id/filter_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

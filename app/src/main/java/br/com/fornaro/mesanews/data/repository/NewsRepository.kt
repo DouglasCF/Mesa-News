@@ -2,9 +2,9 @@ package br.com.fornaro.mesanews.data.repository
 
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
-import br.com.fornaro.mesanews.data.source.local.cache.FilterCache
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.domain.enums.FeedFilter
+import br.com.fornaro.mesanews.domain.models.FilterContent
 import br.com.fornaro.mesanews.domain.models.News
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -19,11 +19,10 @@ class NewsRepository(
     private val authenticationRepository: AuthenticationRepository,
     private val newsRemoteDataSource: NewsRemoteDataSource,
     private val newsLocalDataSource: NewsLocalDataSource,
-    private val cache: FilterCache,
     private val dispatcherMap: DispatcherMap
 ) {
 
-    val filter get() = cache.value ?: FeedFilter.DATE
+    val filter = FilterContent()
 
     private var allNews = emptyList<News>()
 
@@ -34,9 +33,14 @@ class NewsRepository(
     val news
         get() = _news.asFlow()
             .map {
-                when (filter) {
-                    FeedFilter.DATE -> it.sortedByDescending { news -> news.publishedAt.time }
-                    FeedFilter.FAVORITE -> it.filter { news -> news.isFavorite }
+                val filteredByText = if (filter.text.isNotBlank()) {
+                    it.filter { news -> news.title.contains(filter.text, true) }
+                } else {
+                    it
+                }
+                when (filter.type) {
+                    FeedFilter.DATE -> filteredByText.sortedByDescending { news -> news.publishedAt.time }
+                    FeedFilter.FAVORITE -> filteredByText.filter { news -> news.isFavorite }
                 }
             }
 
@@ -71,8 +75,11 @@ class NewsRepository(
         newsLocalDataSource.isFavorite(news.title)
     }
 
-    fun applyFilter(filter: FeedFilter) {
-        cache.value = filter
+    fun applyFilter(filter: FeedFilter, textFilter: String) {
+        this.filter.apply {
+            type = filter
+            text = textFilter
+        }
         _news.sendBlocking(allNews)
     }
 }

@@ -50,6 +50,8 @@
     <string name="filter_description_text">Filter the news according to your preferences</string>
     <string name="filter_date_option">Date</string>
     <string name="filter_favorite_option">Favorite</string>
+    <string name="filter_text_hint">Search for a news</string>
+    <string name="filter_button_text">Filter</string>
 
     <!-- News Detail -->
     <string name="news_detail_share_text">Take a look at this news: %s</string>

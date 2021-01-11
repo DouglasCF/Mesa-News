@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.domain.enums.FeedFilter
+import br.com.fornaro.mesanews.domain.models.FilterContent
 import br.com.fornaro.mesanews.domain.usecase.ApplyFilterPreferenceUseCase
 import kotlinx.coroutines.launch
 
@@ -21,22 +22,15 @@ class FilterDialogViewModel(
         _state.value = FilterState.Initial(filter = newsRepository.filter)
     }
 
-    fun filterNewsByDate() {
+    fun applyFilter(filter: FeedFilter, textFilter: String) {
         viewModelScope.launch {
-            applyFilterPreferenceUseCase.execute(FeedFilter.DATE)
-            _state.value = FilterState.Success
-        }
-    }
-
-    fun filterNewsByFavorite() {
-        viewModelScope.launch {
-            applyFilterPreferenceUseCase.execute(FeedFilter.FAVORITE)
+            applyFilterPreferenceUseCase.execute(filter, textFilter)
             _state.value = FilterState.Success
         }
     }
 }
 
 sealed class FilterState {
-    data class Initial(val filter: FeedFilter) : FilterState()
+    data class Initial(val filter: FilterContent) : FilterState()
     object Success : FilterState()
 }

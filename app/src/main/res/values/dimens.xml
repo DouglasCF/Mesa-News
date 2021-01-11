@@ -74,4 +74,16 @@
     <dimen name="news_item_margin_end_description">16dp</dimen>
     <dimen name="news_item_margin_bottom_description">16dp</dimen>
     <dimen name="news_item_margin_top_description">16dp</dimen>
+
+    <!-- Filter -->
+    <dimen name="filter_start_guideline">16dp</dimen>
+    <dimen name="filter_end_guideline">16dp</dimen>
+    <dimen name="filter_margin_top_description">16dp</dimen>
+    <dimen name="filter_text_size_description">20sp</dimen>
+    <dimen name="filter_margin_top_radio_group">16dp</dimen>
+    <dimen name="filter_padding_horizontal_radio_option">16dp</dimen>
+    <dimen name="filter_margin_top_text">16dp</dimen>
+    <dimen name="filter_layout_height_button">56dp</dimen>
+    <dimen name="filter_margin_bottom_button">16dp</dimen>
+    <dimen name="filter_margin_top_button">16dp</dimen>
 </resources>
