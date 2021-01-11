@@ -71,6 +71,9 @@ dependencies {
     implementation "androidx.room:room-ktx:2.2.6"
     kapt "androidx.room:room-compiler:2.2.6"
 
+    // Facebook
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+
     // Tests
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation "io.mockk:mockk:1.9.3"
