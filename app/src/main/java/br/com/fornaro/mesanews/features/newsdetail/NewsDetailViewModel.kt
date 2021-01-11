@@ -32,8 +32,13 @@ class NewsDetailViewModel(
             _state.value = NewsDetailState.Success(isFavorite = newsRepository.isFavorite(news))
         }
     }
+
+    fun share() {
+        _state.value = NewsDetailState.Share(news)
+    }
 }
 
 sealed class NewsDetailState {
     data class Success(val isFavorite: Boolean) : NewsDetailState()
+    data class Share(val news: News) : NewsDetailState()
 }
