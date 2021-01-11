@@ -9,6 +9,7 @@ import br.com.fornaro.mesanews.data.repository.AuthenticationRepository
 import br.com.fornaro.mesanews.data.repository.NewsRepository
 import br.com.fornaro.mesanews.data.source.local.AuthenticationLocalDataSource
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
+import br.com.fornaro.mesanews.data.source.local.cache.FilterCache
 import br.com.fornaro.mesanews.data.source.local.database.AppDatabase
 import br.com.fornaro.mesanews.data.source.remote.AuthenticationRemoteDataSource
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
@@ -77,6 +78,7 @@ private val repositoryModules = module {
             authenticationRepository = get(),
             newsRemoteDataSource = get(),
             newsLocalDataSource = get(),
+            cache = get(),
             dispatcherMap = get()
         )
     }
@@ -97,6 +99,10 @@ private val databaseModules = module {
     single { provideDatabase(androidContext()) }
     single { provideUserDao(get()) }
     single { provideNewsDao(get()) }
+}
+
+private val cacheModules = module {
+    single { FilterCache }
 }
 
 fun provideDatabase(context: Context) =
@@ -129,4 +135,5 @@ val dataModules = networkModules +
         repositoryModules +
         mapperModules +
         dispatcherModules +
-        databaseModules
+        databaseModules +
+        cacheModules

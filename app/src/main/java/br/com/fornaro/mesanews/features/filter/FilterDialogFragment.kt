@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import br.com.fornaro.mesanews.databinding.DialogFragmentFilterBinding
+import br.com.fornaro.mesanews.domain.enums.FeedFilter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -46,14 +47,18 @@ class FilterDialogFragment : BottomSheetDialogFragment() {
         state.observe(viewLifecycleOwner, ::handleState)
     }
 
-    private fun handleState(state: FilterState) {
-        when (state) {
-            is FilterState.Success -> handleSuccess()
-        }
+    private fun handleState(state: FilterState) = when (state) {
+        is FilterState.Success -> handleSuccess()
+        is FilterState.Initial -> handleInitial(state.filter)
     }
 
     private fun handleSuccess() {
         findNavController().navigateUp()
+    }
+
+    private fun handleInitial(filter: FeedFilter) = when (filter) {
+        FeedFilter.DATE -> binding.filterDateButton.isChecked = true
+        FeedFilter.FAVORITE -> binding.filterFavoriteButton.isChecked = true
     }
 
     override fun onDestroyView() {

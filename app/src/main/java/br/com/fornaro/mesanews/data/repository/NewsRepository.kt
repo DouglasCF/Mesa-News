@@ -2,6 +2,7 @@ package br.com.fornaro.mesanews.data.repository
 
 import br.com.fornaro.mesanews.data.dispatchers.DispatcherMap
 import br.com.fornaro.mesanews.data.source.local.NewsLocalDataSource
+import br.com.fornaro.mesanews.data.source.local.cache.FilterCache
 import br.com.fornaro.mesanews.data.source.remote.NewsRemoteDataSource
 import br.com.fornaro.mesanews.domain.enums.FeedFilter
 import br.com.fornaro.mesanews.domain.models.News
@@ -18,12 +19,13 @@ class NewsRepository(
     private val authenticationRepository: AuthenticationRepository,
     private val newsRemoteDataSource: NewsRemoteDataSource,
     private val newsLocalDataSource: NewsLocalDataSource,
+    private val cache: FilterCache,
     private val dispatcherMap: DispatcherMap
 ) {
 
-    private var allNews = emptyList<News>()
+    val filter get() = cache.value ?: FeedFilter.DATE
 
-    private var filter = FeedFilter.DATE
+    private var allNews = emptyList<News>()
 
     private val _highlights = ConflatedBroadcastChannel<List<News>>()
     val highlights get() = _highlights.asFlow()
@@ -70,7 +72,7 @@ class NewsRepository(
     }
 
     fun applyFilter(filter: FeedFilter) {
-        this.filter = filter
+        cache.value = filter
         _news.sendBlocking(allNews)
     }
 }

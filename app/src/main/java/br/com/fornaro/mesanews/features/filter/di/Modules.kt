@@ -7,6 +7,7 @@ import org.koin.dsl.module
 private val viewModelModules = module {
     viewModel {
         FilterDialogViewModel(
+            newsRepository = get(),
             applyFilterPreferenceUseCase = get()
         )
     }
