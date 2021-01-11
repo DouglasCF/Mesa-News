@@ -56,6 +56,7 @@ class NewsDetailFragment : Fragment() {
         setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.news_detail_favorite -> viewModel.favoriteNews()
+                R.id.news_detail_share -> Unit
             }
             true
         }
