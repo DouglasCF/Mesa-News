@@ -26,20 +26,24 @@ class FeedViewModel(
     private val _state = MutableLiveData<FeedState>()
     val state: LiveData<FeedState> get() = _state
 
-    init {
-        _state.value = FeedState.Loading
-        val handler = ExceptionMapper { error ->
-            _state.value = FeedState.Error(error)
-        }
-        viewModelScope.launch(handler) { newsRepository.getHighlightsNews() }
-        viewModelScope.launch(handler) { newsRepository.getNews() }
+    private val handler = ExceptionMapper { error ->
+        _state.value = FeedState.Error(error)
+    }
 
+    init {
+        getFeed()
         viewModelScope.launch(handler) {
             newsRepository.highlights.collect { news -> updateContent(highlights = news) }
         }
         viewModelScope.launch(handler) {
             newsRepository.news.collect { news -> updateContent(news = news) }
         }
+    }
+
+    fun getFeed() {
+        _state.value = FeedState.Loading
+        viewModelScope.launch(handler) { newsRepository.getHighlightsNews() }
+        viewModelScope.launch(handler) { newsRepository.getNews() }
     }
 
     fun favoriteNews(news: News) {

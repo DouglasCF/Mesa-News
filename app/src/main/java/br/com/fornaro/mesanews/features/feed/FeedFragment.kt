@@ -64,12 +64,11 @@ class FeedFragment : Fragment() {
 
     private fun setupViewModel() = with(viewModel) {
         state.observe(viewLifecycleOwner, ::handleState)
-//        getNews()
     }
 
     private fun setupError() = with(binding.error.tryAgainButton) {
         setOnClickListener {
-//            viewModel.getNews()
+            viewModel.getFeed()
         }
     }
 
