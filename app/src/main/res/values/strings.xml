@@ -33,11 +33,17 @@
     <!-- Feed -->
     <string name="feed_highlights_title">Highlights</string>
     <string name="feed_news_title">Latest news</string>
+    <string name="feed_filter">Filter</string>
 
     <!-- Highlights Item -->
     <string name="highlights_item_favorite_button_description">Favorite</string>
 
     <!-- News Item -->
     <string name="news_item_favorite_button_description">Favorite</string>
+
+    <!-- Filter -->
+    <string name="filter_description_text">Filter the news according to your preferences</string>
+    <string name="filter_date_option">Date</string>
+    <string name="filter_favorite_option">Favorite</string>
 
 </resources>

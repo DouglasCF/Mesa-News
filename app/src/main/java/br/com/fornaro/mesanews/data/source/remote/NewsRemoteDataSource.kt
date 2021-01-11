@@ -3,7 +3,8 @@ package br.com.fornaro.mesanews.data.source.remote
 import br.com.fornaro.mesanews.data.source.remote.api.MesaApi
 import br.com.fornaro.mesanews.data.source.remote.mappers.HighlightsRemoteMapper
 import br.com.fornaro.mesanews.data.source.remote.mappers.NewsRemoteMapper
-import br.com.fornaro.mesanews.domain.models.News
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 
 class NewsRemoteDataSource(
     private val api: MesaApi,
@@ -11,13 +12,16 @@ class NewsRemoteDataSource(
     private val newsMapper: NewsRemoteMapper
 ) {
 
-    suspend fun fetchHighlights(userToken: String): List<News> {
+    suspend fun fetchHighlights(userToken: String) = flow {
         val response = api.fetchHighlights(userToken)
-        return highlightsMapper.map(response)
+        emit(highlightsMapper.map(response))
     }
 
-    suspend fun fetchNews(userToken: String): List<News> {
-        val response = api.fetchNews(userToken)
-        return newsMapper.map(response)
+    suspend fun fetchNews(userToken: String) = flow {
+        while (true) {
+            val response = api.fetchNews(userToken)
+            emit(newsMapper.map(response))
+            delay(30 * 1000L)
+        }
     }
 }
