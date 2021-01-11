@@ -40,10 +40,14 @@
 
     <!-- News Item -->
     <string name="news_item_favorite_button_description">Favorite</string>
+    <string name="news_item_share_button_description">Share</string>
 
     <!-- Filter -->
     <string name="filter_description_text">Filter the news according to your preferences</string>
     <string name="filter_date_option">Date</string>
     <string name="filter_favorite_option">Favorite</string>
+
+    <!-- News Detail -->
+    <string name="news_detail_share_text">Take a look at this news: %s</string>
 
 </resources>
